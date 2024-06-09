@@ -81,17 +81,17 @@ public:
 - **void addEdge(int node1Index, int node2Index)**: Metode virtual murni untuk menambahkan edge (rute) antara dua node.
 - **void display() const**: Metode virtual murni untuk menampilkan graf.
 
-### TrainGraphAdjacencyMatrix
+### TrainGraphAdjencyMatrix
 
 Mengimplementasikan TrainGraph menggunakan matriks ketetanggaan.
 
 ```cpp
-class TrainGraphAdjacencyMatrix : public TrainGraph
+class TrainGraphAdjencyMatrix : public TrainGraph
 {
 public:
-    TrainGraphAdjacencyMatrix(int size) : nodeCount(0), adjacencyMatrix(size, vector<int>(size, 0)) {}
+    TrainGraphAdjencyMatrix(int size) : nodeCount(0), AdjencyMatrix(size, vector<int>(size, 0)) {}
 
-    ~TrainGraphAdjacencyMatrix() override
+    ~TrainGraphAdjencyMatrix() override
     {
         for (int i = 0; i < nodeCount; i++)
         {
@@ -107,14 +107,14 @@ public:
 
     void addEdge(int node1Index, int node2Index) override
     {
-        adjacencyMatrix[node1Index][node2Index] = 1;
-        adjacencyMatrix[node2Index][node1Index] = 1;
+        AdjencyMatrix[node1Index][node2Index] = 1;
+        AdjencyMatrix[node2Index][node1Index] = 1;
     }
 
     void display() const override
     {
         cout << "-------------------------------------------------------" << endl;
-        cout << "Train Route Graph (Adjacency Matrix):" << endl;
+        cout << "Train Route Graph (Adjency Matrix):" << endl;
 
         for (int i = 0; i < nodeCount; i++)
         {
@@ -122,7 +122,7 @@ public:
 
             for (int j = 0; j < nodeCount; j++)
             {
-                if (adjacencyMatrix[i][j] == 1)
+                if (AdjencyMatrix[i][j] == 1)
                 {
                     cout << nodes[j]->getName() << " - ";
                 }
@@ -135,13 +135,13 @@ public:
 protected:
     int nodeCount;
     vector<TrainNode *> nodes;
-    vector<vector<int>> adjacencyMatrix;
+    vector<vector<int>> AdjencyMatrix;
 };
 ```
 
 #### Publik
-- **TrainGraphAdjacencyMatrix(int size)**: Konstruktor untuk Menginisialisasi matriks ketetanggaan berukuran size dengan nilai awal 0 dan menghitung jumlah node awal.
-- **~TrainGraphAdjacencyMatrix() override**: Destruktor untuk menghapus semua node yang dialokasikan dalam graf untuk membersihkan memori.
+- **TrainGraphAdjencyMatrix(int size)**: Konstruktor untuk Menginisialisasi matriks ketetanggaan berukuran size dengan nilai awal 0 dan menghitung jumlah node awal.
+- **~TrainGraphAdjencyMatrix() override**: Destruktor untuk menghapus semua node yang dialokasikan dalam graf untuk membersihkan memori.
 - **void addNode(TrainNode *node)**: Menambahkan node (kota) ke dalam graf.
 - **void addEdge(int node1Index, int node2Index)**: Menambahkan edge (rute) antara dua node.
 - **void display() const**: Menampilkan graf.
@@ -149,7 +149,7 @@ protected:
 #### Protected
 - **int nodeCount**: Menyimpan jumlah node dalam graf.
 - **vector<TrainNode *> nodes**: Menyimpan daftar node dalam graf.
-- **vector<vector<int>> adjacencyMatrix**: Matriks ketetanggaan untuk merepresentasikan koneksi anat node di dalam graf.
+- **vector<vector<int>> adjencyMatrix**: Matriks ketetanggaan untuk merepresentasikan koneksi anat node di dalam graf.
 
 ### TrainTransRoute
 
@@ -179,17 +179,17 @@ private:
 Mewarisi TrainGraphAdjacencyMatrix dan menambahkan fungsionalitas untuk mencari rute terpendek dan semua rute yang mungkin.
 
 ```cpp
-class TrainRoute : public TrainGraphAdjacencyMatrix
+class TrainRoute : public TrainGraphAdjencyMatrix
 {
 public:
-    TrainRoute(int size) : TrainGraphAdjacencyMatrix(size) {}
+    TrainRoute(int size) : TrainGraphAdjencyMatrix(size) {}
 
     int findNodeIndex(const string &nodeName);
     void displayShortestRoute(const string &startLocation, const string &endLocation);
     void displayAllRoutes(const string &startLocation, const string &endLocation);
     void deleteRoute(int node1Index, int node2Index);
     void addRoute(int node1Index, int node2Index);
-    void displayAdjacencyMatrix() const;
+    void displayAdjencyMatrix() const;
 
 private:
     void dfs(int currentNode, int targetNode, vector<int> &visited, vector<int> &path, bool &found);
@@ -209,7 +209,7 @@ private:
 - **void displayAllRoutes(const string &startLocation, const string &endLocation)**: Menampilkan semua rute yang mungkin dilewati antar dua kota.
 - **void deleteRoute(int node1Index, int node2Index)**: Menghapus rute antara dua node.
 - **void addRoute(int node1Index, int node2Index)**: Menambahkan rute antara dua node.
-- **void displayAdjacencyMatrix() const**: Menampilkan matriks ketetanggaan.
+- **void displayAdjencyMatrix() const**: Menampilkan matriks ketetanggaan.
 
 #### Private
 - **void dfs(int currentNode, int targetNode, vector<int> &visited, vector<int> &path, bool &found)**: Melakukan pencarian jalur dari node saat ini ke node target menggunakan algoritma mendalam (DFS).
@@ -231,7 +231,7 @@ Program ini menyediakan antarmuka menu untuk mengelola rute kereta api. Pilihan 
 3. Menambahkan Kota
 4. Menambahkan Rute
 5. Menghapus Rute
-6. Menampilkan adjacency matrix
+6. Menampilkan adjency matrix
 0. Keluar
 
 Berikut adalah penggunaan program:
