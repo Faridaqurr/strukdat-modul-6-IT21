@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//membuat Class Node
 class TrainNode
 {
 public:
@@ -19,8 +20,7 @@ public:
 protected:
     string name;
 };
-
-// Abstract Class Graph
+// Graph
 class TrainGraph
 {
 public:
@@ -31,7 +31,8 @@ public:
     virtual void display() const = 0;
 };
 
-class TrainGraphAdjacencyMatrix : public TrainGraph
+//Adjency Matrix
+class TrainGraphAdjencyMatrix : public TrainGraph
 {
 public:
     TrainGraphAdjacencyMatrix(int size) : nodeCount(0), adjacencyMatrix(size, vector<int>(size, 0)) {}
@@ -343,20 +344,20 @@ void TrainRoute::dfsAllRoutes(int currentNode, int targetNode, vector<int> &visi
 int main()
 {
     TrainRoute TrainRoute(20);
-
+// menambahkan kota
     TrainRoute.addNode(new TrainNode("Jakarta"));      // 0
-    TrainRoute.addNode(new TrainNode("Kediri"));   // 1
-    TrainRoute.addNode(new TrainNode("Malang"));      // 2
+    TrainRoute.addNode(new TrainNode("Kediri"));       // 1
+    TrainRoute.addNode(new TrainNode("Malang"));       // 2
     TrainRoute.addNode(new TrainNode("Surabaya"));     // 3
-    TrainRoute.addNode(new TrainNode("Banyuwangi"));         // 4
-    TrainRoute.addNode(new TrainNode("Bandung"));       // 5
-    TrainRoute.addNode(new TrainNode("Semarang")); // 6
-    TrainRoute.addNode(new TrainNode("Kutoarjo"));    // 7
-    TrainRoute.addNode(new TrainNode("Purwokerto"));      // 8
-    TrainRoute.addNode(new TrainNode("Yogyakarta"));        // 9
-    TrainRoute.addNode(new TrainNode("Solo"));        // 10
-    TrainRoute.addNode(new TrainNode("Nganjuk"));       // 11
-    TrainRoute.addNode(new TrainNode("Blitar"));        // 12
+    TrainRoute.addNode(new TrainNode("Banyuwangi"));   // 4
+    TrainRoute.addNode(new TrainNode("Bandung"));      // 5
+    TrainRoute.addNode(new TrainNode("Semarang"));     // 6
+    TrainRoute.addNode(new TrainNode("Kutoarjo"));     // 7
+    TrainRoute.addNode(new TrainNode("Purwokerto"));   // 8
+    TrainRoute.addNode(new TrainNode("Yogyakarta"));   // 9
+    TrainRoute.addNode(new TrainNode("Solo"));         // 10
+    TrainRoute.addNode(new TrainNode("Nganjuk"));      // 11
+    TrainRoute.addNode(new TrainNode("Blitar"));       // 12
 
     TrainRoute.addEdge(0, 1);   // Jakarta - Kediri
     TrainRoute.addEdge(0, 3);   // Jakarta - Surabaya
@@ -382,14 +383,14 @@ int main()
     do
     {
         cout << "\nMenu:\n";
-        cout << "1. Show Shortest Route\n";
-        cout << "2. Show All Routes\n";
-        cout << "3. Add City\n";
-        cout << "4. Add Route\n";
-        cout << "5. Delete Route\n";
-        cout << "6. Show Adjacency Matrix\n";
+        cout << "1. Menunjukkan Rute Terpendek\n";
+        cout << "2. Menunjukkan Semua Rute\n";
+        cout << "3. Tambah Kota\n";
+        cout << "4. Tambah Rute\n";
+        cout << "5. Hapus Rute\n";
+        cout << "6. Menunjukkan Adjacency Matrix\n";
         cout << "0. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "Pilih Menu: ";
         cin >> choice;
 
         cin.ignore();
@@ -399,10 +400,10 @@ int main()
         case 1:
         {
             string startLocation, endLocation;
-            cout << "Enter start location: ";
+            cout << "Pilih Keberangkatan: ";
             getline(cin, startLocation);
 
-            cout << "Enter end location: ";
+            cout << "Pilih Tujuan: ";
             getline(cin, endLocation);
 
             TrainRoute.displayShortestRoute(startLocation, endLocation);
@@ -411,10 +412,10 @@ int main()
         case 2:
         {
             string startLocation, endLocation;
-            cout << "Enter start location: ";
+            cout << "Pilih Keberangkatan: ";
             getline(cin, startLocation);
 
-            cout << "Enter end location: ";
+            cout << "Pilih Tujuan: ";
             getline(cin, endLocation);
 
             TrainRoute.displayAllRoutes(startLocation, endLocation);
@@ -423,17 +424,17 @@ int main()
         case 3:
         {
             string cityName;
-            cout << "Enter the name of the city to add: ";
+            cout << "Masukkan Nama Kota: ";
             getline(cin, cityName);
 
             TrainRoute.addNode(new TrainNode(cityName));
-            cout << "City added successfully.\n";
+            cout << "Kota Berhasil Ditambahkan.\n";
             break;
         }
         case 4:
         {
             string city1, city2;
-            cout << "Enter the names of the cities to add the route (space-separated): ";
+            cout << "Tambahkan 2 Nama Kota yang akan ditambahkan Ke Rute: ";
             cin >> city1 >> city2;
 
             int node1 = TrainRoute.findNodeIndex(city1);
@@ -445,14 +446,14 @@ int main()
             }
             else
             {
-                cout << "Invalid city names. Please enter valid city names.\n";
+                cout << "Kota Tidak Ada. Masukkan kota yang tersedia.\n";
             }
             break;
         }
         case 5:
         {
             string city1, city2;
-            cout << "Enter the names of the cities to delete the route (space-separated): ";
+            cout << "Masukkan 2 Nama Kota yang rutenya akan dihapus: ";
             cin >> city1 >> city2;
 
             int node1 = TrainRoute.findNodeIndex(city1);
@@ -464,7 +465,7 @@ int main()
             }
             else
             {
-                cout << "Invalid city names. Please enter valid city names.\n";
+                cout << "Kota Tidak Tersedi. Masukkan Kota Yang Tersedia.\n";
             }
             break;
         }
@@ -474,10 +475,10 @@ int main()
             break;
         }
         case 0:
-            cout << "Exiting...\n";
+            cout << "Keluar...\n";
             break;
         default:
-            cout << "Invalid choice. Please enter a valid option.\n";
+            cout << "Pilihan Tidak Ada. Pilih 0 - 6.\n";
         }
     } while (choice != 0);
 
