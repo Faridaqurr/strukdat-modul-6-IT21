@@ -14,7 +14,7 @@ Pada project kali ini, kelompok kami mengimplementasikan sistem manajemen rute k
 - [Kelas](#kelas)
   - [TrainNode](#trainnode)
   - [TrainGraph](#traingraph)
-  - [TrainGraphAdjacencyMatrix](#traingraphadjacencymatrix)
+  - [TrainGraphAdjencyMatrix](#traingraphadjencymatrix)
   - [TrainTransRoute](#traintransroute)
   - [TrainRoute](#trainroute)
 - [Penggunaan](#penggunaan)
