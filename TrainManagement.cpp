@@ -35,9 +35,9 @@ public:
 class TrainGraphAdjencyMatrix : public TrainGraph
 {
 public:
-    TrainGraphAdjacencyMatrix(int size) : nodeCount(0), adjacencyMatrix(size, vector<int>(size, 0)) {}
+    TrainGraphAdjencyMatrix(int size) : nodeCount(0), AdjencyMatrix(size, vector<int>(size, 0)) {}
 
-    ~TrainGraphAdjacencyMatrix() override
+    ~TrainGraphAdjencyMatrix() override
     {
         for (int i = 0; i < nodeCount; i++)
         {
@@ -53,14 +53,14 @@ public:
 
     void addEdge(int node1Index, int node2Index) override
     {
-        adjacencyMatrix[node1Index][node2Index] = 1;
-        adjacencyMatrix[node2Index][node1Index] = 1;
+        AdjencyMatrix[node1Index][node2Index] = 1;
+        AdjencyMatrix[node2Index][node1Index] = 1;
     }
 
     void display() const override
     {
         cout << "-------------------------------------------------------" << endl;
-        cout << "Train Route Graph (Adjacency Matrix):" << endl;
+        cout << "Train Route Graph (Adjency Matrix):" << endl;
 
         for (int i = 0; i < nodeCount; i++)
         {
@@ -68,7 +68,7 @@ public:
 
             for (int j = 0; j < nodeCount; j++)
             {
-                if (adjacencyMatrix[i][j] == 1)
+                if (AdjencyMatrix[i][j] == 1)
                 {
                     cout << nodes[j]->getName() << " - ";
                 }
@@ -81,7 +81,7 @@ public:
 protected:
     int nodeCount;
     vector<TrainNode *> nodes;
-    vector<vector<int>> adjacencyMatrix;
+    vector<vector<int>> AdjencyMatrix;
 };
 
 class TrainTransRoute
@@ -94,17 +94,17 @@ private:
     string endLocation;
 };
 
-class TrainRoute : public TrainGraphAdjacencyMatrix
+class TrainRoute : public TrainGraphAdjencyMatrix
 {
 public:
-    TrainRoute(int size) : TrainGraphAdjacencyMatrix(size) {}
+    TrainRoute(int size) : TrainGraphAdjencyMatrix(size) {}
 
     int findNodeIndex(const string &nodeName);
     void displayShortestRoute(const string &startLocation, const string &endLocation);
     void displayAllRoutes(const string &startLocation, const string &endLocation);
     void deleteRoute(int node1Index, int node2Index);
     void addRoute(int node1Index, int node2Index);
-    void displayAdjacencyMatrix() const;
+    void displayAdjencyMatrix() const;
 
 private:
     void dfs(int currentNode, int targetNode, vector<int> &visited, vector<int> &path, bool &found);
@@ -116,10 +116,10 @@ private:
     void printAddedRoute(int node1Index, int node2Index);
 };
 
-void TrainRoute::displayAdjacencyMatrix() const
+void TrainRoute::displayAdjencyMatrix() const
 {
     cout << "-------------------------------------------------------" << endl;
-    cout << "Train Route Graph (Adjacency Matrix):" << endl;
+    cout << "Train Route Graph (Adjency Matrix):" << endl;
 
     for (int i = 0; i < nodeCount; i++)
     {
@@ -127,7 +127,7 @@ void TrainRoute::displayAdjacencyMatrix() const
 
         for (int j = 0; j < nodeCount; j++)
         {
-            if (adjacencyMatrix[i][j] == 1)
+            if (AdjencyMatrix[i][j] == 1)
             {
                 cout << nodes[j]->getName() << " - ";
             }
@@ -140,10 +140,10 @@ void TrainRoute::displayAdjacencyMatrix() const
 void TrainRoute::addRoute(int node1Index, int node2Index)
 {
     if (node1Index >= 0 && node1Index < nodeCount && node2Index >= 0 && node2Index < nodeCount &&
-        adjacencyMatrix[node1Index][node2Index] == 0 && adjacencyMatrix[node2Index][node1Index] == 0)
+        AdjencyMatrix[node1Index][node2Index] == 0 && AdjencyMatrix[node2Index][node1Index] == 0)
     {
-        adjacencyMatrix[node1Index][node2Index] = 1;
-        adjacencyMatrix[node2Index][node1Index] = 1;
+        AdjencyMatrix[node1Index][node2Index] = 1;
+        AdjencyMatrix[node2Index][node1Index] = 1;
         printAddedRoute(node1Index, node2Index);
     }
     else
@@ -162,10 +162,10 @@ void TrainRoute::printAddedRoute(int node1Index, int node2Index)
 void TrainRoute::deleteRoute(int node1Index, int node2Index)
 {
     if (node1Index >= 0 && node1Index < nodeCount && node2Index >= 0 && node2Index < nodeCount &&
-        adjacencyMatrix[node1Index][node2Index] == 1 && adjacencyMatrix[node2Index][node1Index] == 1)
+        AdjencyMatrix[node1Index][node2Index] == 1 && AdjencyMatrix[node2Index][node1Index] == 1)
     {
-        adjacencyMatrix[node1Index][node2Index] = 0;
-        adjacencyMatrix[node2Index][node1Index] = 0;
+        AdjencyMatrix[node1Index][node2Index] = 0;
+        AdjencyMatrix[node2Index][node1Index] = 0;
         printDeletedRoute(node1Index, node2Index);
     }
     else
@@ -224,10 +224,10 @@ void TrainRoute::displayShortestRoute(const string &startLocation, const string 
 
             for (int v = 0; v < nodeCount; ++v)
             {
-                if (!visited[v] && adjacencyMatrix[u][v] && distance[u] != INT_MAX &&
-                    distance[u] + adjacencyMatrix[u][v] < distance[v])
+                if (!visited[v] && AdjencyMatrix[u][v] && distance[u] != INT_MAX &&
+                    distance[u] + AdjencyMatrix[u][v] < distance[v])
                 {
-                    distance[v] = distance[u] + adjacencyMatrix[u][v];
+                    distance[v] = distance[u] + AdjencyMatrix[u][v];
                     parent[v] = u;
                 }
             }
@@ -330,7 +330,7 @@ void TrainRoute::dfsAllRoutes(int currentNode, int targetNode, vector<int> &visi
     {
         for (int neighbor = 0; neighbor < nodeCount; ++neighbor)
         {
-            if (!visited[neighbor] && adjacencyMatrix[currentNode][neighbor] == 1)
+            if (!visited[neighbor] && AdjencyMatrix[currentNode][neighbor] == 1)
             {
                 dfsAllRoutes(neighbor, targetNode, visited, path);
             }
@@ -388,7 +388,7 @@ int main()
         cout << "3. Tambah Kota\n";
         cout << "4. Tambah Rute\n";
         cout << "5. Hapus Rute\n";
-        cout << "6. Menunjukkan Adjacency Matrix\n";
+        cout << "6. Menunjukkan Adjency Matrix\n";
         cout << "0. Exit\n";
         cout << "Pilih Menu: ";
         cin >> choice;
@@ -471,7 +471,7 @@ int main()
         }
         case 6:
         {
-            TrainRoute.displayAdjacencyMatrix();
+            TrainRoute.displayAdjencyMatrix();
             break;
         }
         case 0:
